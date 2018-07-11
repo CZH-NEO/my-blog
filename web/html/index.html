@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <title>CZH-NEO blog</title>
+<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .info-box {
+            border: double #C0C0C0;
+            /*color: #F0FFFF;*/
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-inverse navbar-default navbar-static-top" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <li class="active"><a class="navbar-brand " href="#">个人主页</a></li>
+                    </div>
+                    <div>
+                        <ul class="nav navbar-nav">
+                            <li class=""><a href="#">文章</a></li>
+                            <li><a href="#">随笔</a></li>
+                            <li><a href="#">留言板</a></li>
+                        </ul>
+                    </div>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-4 ">
+            <div class="info-box">
+                <h3 class="">个人资料</h3>
+                <div class=" d-flex ">
+                    <dl class="text-center" title="0">
+                        <dt>原创</dt>
+                        <dd><span class="count">0</span></dd>
+                    </dl>
+                    <dl class="text-center" title="0">
+                        <dt>转载</dt>
+                        <dd><span class="count" id="fan">0</span></dd>
+                    </dl>
+                    <dl class="text-center" title="0">
+                        <dt>阅读</dt>
+                        <dd><span class="count">0</span></dd>
+                    </dl>
+                    <dl class="text-center" title="1">
+                        <dt>评论</dt>
+                        <dd><span class="count">1</span></dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="info-box">
+                <h3 class="aside-title">个人分类</h3>
+                <ul>
+                    <li>
+                        <a href="#">
+                            tips <span class="count float-right">1篇</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h3 class="">归档</h3>
+                <ul class="">
+                    <!--归档统计-->
+                    <li>
+                        <a href="#">
+                            2018年4月 <span class="count float-right">1篇</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-8" >
+            <div class="article-list" th:each="article : ${articleList}">
+                <div class="panel panel-info" data-articleid="">
+                    <div class="panel-heading">
+                        <h4 class="text-truncate">
+                            <a href="" target="_blank" th:text="${article.title}" >
+                                文章标题
+                            </a>
+                            <div th:switch="${article.isprivated}" >
+                                <span class="" th:case="false">公开文章 </span>
+                                <span class="" th:case="true">私密文章</span>
+                                <span class="" th:case="*">default</span>
+                            </div>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="content" th:utext="${article.text.substring(0,100)}"  style="display: inline;  width: inherit;">
+                            <a href="#" target="_blank">
+                               文章正文 </a>
+                        </div>
+                        <!--  info-box d-flex align-content-center-->
+                        <div class=" ">
+                            <p style="display: inline">
+                                <span class="date" th:text="${article.getDateString()}">2018-04-25 19:44:10</span>
+                            </p>
+                            <p style="display: inline">
+                                <span class="read-num" th:text="'阅读数：'+${article.readnum}">阅读数：0</span>
+                            </p>
+                            <p style="display: inline">
+                                <span class="comment-num" th:text="'评论数：'+${article.commentnum}">评论数：0</span>
+                            </p>
+                        </div>
+                        <div class="opt-box">
+                            <a class="btn btn-primary" data-type="edit" href="#" th:href="@{'/article.do?id='+${article.articleid}}">编辑</a>
+                            <button class="btn btn-primary" data-type="delete" href="#" th:onclick="@{'window.location.href=\'/home/deleteArticle.do?id='+${article.articleid}+'\''}" th:href="@{'/deleteArticle.do?id='+${article.articleid}}">删除</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" align="center">
+            <ul class="pagination" style="align-content: center">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

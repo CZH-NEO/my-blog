@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TagMapper">
+  <resultMap id="BaseResultMap" type="model.Tag">
+    <id column="tagId" jdbcType="INTEGER" property="tagid" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tagId, tag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_tags
+    where tagId = #{tagid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blog_tags
+    where tagId = #{tagid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="model.Tag">
+    insert into blog_tags (tagId, tag)
+    values (#{tagid,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="model.Tag">
+    insert into blog_tags
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tagid != null">
+        tagId,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tagid != null">
+        #{tagid,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Tag">
+    update blog_tags
+    <set>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tagId = #{tagid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Tag">
+    update blog_tags
+    set tag = #{tag,jdbcType=VARCHAR}
+    where tagId = #{tagid,jdbcType=INTEGER}
+  </update>
+</mapper>
